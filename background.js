@@ -46,15 +46,14 @@ async function getPlaylistData(tabId, url) {
         sendForegroundMsg(tabId, "process_playlist").then((response) => resolve(response));
       }
       // else, inject script first, then send message
-      else if (res === {}) {
+      else if (res.message === "fail") {
         chrome.scripting
           .executeScript({
             target: { tabId: tabId },
             files: ["./foreground.js"],
           })
-          .then(sendForegroundMsg(tabId, "process_playlist"))
-          .then((response) => resolve(response))
-          .catch((err) => console.log(err));
+          .then(() => sendForegroundMsg(tabId, "process_playlist"))
+          .then((response) => resolve(response));
       }
     });
   });
@@ -70,7 +69,7 @@ async function sendForegroundMsg(tabId, cmd) {
         cmd: cmd,
       },
       (res) => {
-        if (chrome.runtime.lastError) return resolve({});
+        if (chrome.runtime.lastError) return resolve({ message: "fail" });
         else return resolve(res);
       }
     );
