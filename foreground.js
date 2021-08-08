@@ -22,9 +22,11 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
     }
     console.log("processing playlist data");
 
-    chrome.storage.local.get("xPath", (data) => {
+    let xPath = msg.isRadio ? "xPathRadio" : "xPath"; //determine which xPath to load
+
+    chrome.storage.local.get(xPath, (data) => {
       let playlistData;
-      playlistData = getPlaylistData(data.xPath);
+      playlistData = getPlaylistData(msg.isRadio ? data.xPathRadio : data.xPath, msg.isRadio);
 
       sendResponse({
         message: "success",
@@ -36,17 +38,27 @@ chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
   }
 });
 
-function getPlaylistData(xPath) {
+function getPlaylistData(xPath, isRadio) {
   let tsvDataArray = new Array();
 
   let conts = getElementByXpath(xPath);
   // loop through all contents
   for (let i = 0; i < conts.childElementCount; i++) {
-    let cont = conts.childNodes[i].childNodes[3].childNodes[1].childNodes[3].childNodes[1].childNodes[3];
-    let link = "https://youtube.com" + cont.getAttribute("href").split("&")[0];
-    let title = cont.getAttribute("title");
-    let data = `${i}\t${title}\t${link}`;
-    tsvDataArray.push(data);
+    //radio playlist
+    if (isRadio) {
+      let link = "https://youtube.com" + conts.childNodes[i].childNodes[2].childNodes[1].childNodes[3].childNodes[1].childNodes[1].getAttribute("href").split("&")[0];
+      let title = conts.childNodes[i].childNodes[2].childNodes[1].childNodes[5].childNodes[3].childNodes[3].innerText;
+      let data = `${i}\t${title}\t${link}`;
+      tsvDataArray.push(data);
+    }
+    //generic playlist
+    else {
+      let cont = conts.childNodes[i].childNodes[3].childNodes[1].childNodes[3].childNodes[1].childNodes[3];
+      let link = "https://youtube.com" + cont.getAttribute("href").split("&")[0];
+      let title = cont.getAttribute("title");
+      let data = `${i}\t${title}\t${link}`;
+      tsvDataArray.push(data);
+    }
   }
   return tsvDataArray;
 }

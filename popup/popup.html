@@ -1,69 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 300px;
+        height: 200px;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <style>
-    body {
-      width: 300px;
-      height: 200px;
-    }
+      .parent-element {
+        width: 100%;
+        text-align: center;
+        position: relative;
+        top: 80px;
+      }
 
-    .parent-element {
-      width: 100%;
-      text-align: center;
-      position: relative;
-      top: 80px;
-    }
+      .btn {
+        display: inline-block;
+      }
 
-    .preview-btn {
-      display: inline-block;
-    }
+      .footer-parent {
+        display: flex;
+      }
 
-    .footer-parent {
-      display: flex;
-    }
+      .footer-grand-parent {
+        position: relative;
+        top: 100%;
+      }
 
-    .footer-grand-parent {
-      position: relative;
-      top: 100%;
-    }
+      .settings-alignment {
+        position: relative;
+        left: 160px;
+      }
+    </style>
+  </head>
 
-    .settings-alignment {
-      position: relative;
-      left: 160px;
-    }
-  </style>
-</head>
-
-<body>
-
-  <!-- body -->
-  <section>
-    <h1 style="text-align: center;">YT Playlist to File</h1>
-    <div class="parent-element">
-      <button class="preview-btn">Open Preview</button>
-      <h2 id="conditionalMessage"></h2>
-    </div>
-  </section>
-
-
-  <!-- footer area -->
-  <footer class="footer-grand-parent">
-    <div class="footer-parent">
-      <img src="../images/icon-32x32.png" alt="">
-      <h4>text example</h4>
-      <div class="settings-alignment">
-        <img src="../images/901827-200.png" style="height: 30px;width: 30px;" alt="">
+  <body>
+    <!-- Header -->
+    <section>
+      <img src="../images/icon-32x32.png" alt="" />
+      <h1 style="text-align: center">YT Playlist to File</h1>
+    </section>
+    <!-- body -->
+    <section id="main-body">
+      <div class="parent-element">
+        <p id="log-txt" style="text-align: center"></p>
+        <button id="convert-btn" class="btn">Convert</button>
+        <h2 id="conditionalMessage"></h2>
       </div>
-    </div>
-  </footer>
+    </section>
 
+    <!-- Result -->
+    <section id="result-parent" style="display: none">
+      <p id="result-txt" style="text-align: center">36 Playlist Converted.</p>
+      <button id="preview-btn" class="btn">Open Preview</button>
+      <button id="save-btn" class="btn">Save as .tsv</button>
+    </section>
 
-  <script src="./popup.js"></script>
-</body>
+    <!-- footer area -->
+    <footer class="footer-grand-parent">
+      <div class="footer-parent">
+        <img src="../images/icon-32x32.png" alt="" />
+        <h4>text example</h4>
+        <div class="settings-alignment">
+          <img src="../images/901827-200.png" style="height: 30px; width: 30px" alt="" />
+        </div>
+      </div>
+    </footer>
 
+    <script src="./popup.js"></script>
+  </body>
 </html>

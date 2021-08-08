@@ -1,8 +1,11 @@
+let isRadio = false; // if playlist is playing
+
 // set default xpath
 chrome.runtime.onInstalled.addListener(() => {
   chrome.storage.local.set({
     xPath:
       "/html/body/ytd-app/div/ytd-page-manager/ytd-browse/ytd-two-column-browse-results-renderer/div[1]/ytd-section-list-renderer/div[2]/ytd-item-section-renderer/div[3]/ytd-playlist-video-list-renderer/div[3]",
+    xPathRadio: "/html/body/ytd-app/div/ytd-page-manager/ytd-watch-flexy/div[5]/div[2]/div/ytd-playlist-panel-renderer/div/div[2]",
   });
 });
 
@@ -15,6 +18,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
       });
       return;
     }
+    isRadio = request.isRadio;
 
     getCurrentTab()
       .then((tab) => getPlaylistData(tab.id, tab.url))
@@ -24,6 +28,25 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
           payload: data.payload,
         });
       });
+
+    return true;
+  }
+  if (request.cmd === "get_preview_data") {
+    // if error, ignore
+    if (chrome.runtime.lastError) {
+      sendResponse({
+        message: "fail",
+      });
+      return;
+    }
+
+    // load preview data
+    chrome.storage.local.get("previewData", (data) => {
+      sendResponse({
+        message: "success",
+        payload: data,
+      });
+    });
 
     return true;
   }
@@ -39,11 +62,10 @@ async function getPlaylistData(tabId, url) {
   if (!/^http/.test(url)) return;
 
   let getData = new Promise((resolve, reject) => {
-    sendForegroundMsg(tabId, "injected").then((res) => {
-      console.log(res);
+    sendPayloadData(tabId, "injected").then((res) => {
       // if already inject, direct send message without injecting
       if (res.message === "success") {
-        sendForegroundMsg(tabId, "process_playlist").then((response) => resolve(response));
+        sendPayloadData(tabId, "process_playlist").then((response) => resolve(response));
       }
       // else, inject script first, then send message
       else if (res.message === "fail") {
@@ -52,7 +74,7 @@ async function getPlaylistData(tabId, url) {
             target: { tabId: tabId },
             files: ["./foreground.js"],
           })
-          .then(() => sendForegroundMsg(tabId, "process_playlist"))
+          .then(() => sendPayloadData(tabId, "process_playlist"))
           .then((response) => resolve(response));
       }
     });
@@ -61,12 +83,13 @@ async function getPlaylistData(tabId, url) {
   return await getData;
 }
 
-async function sendForegroundMsg(tabId, cmd) {
+async function sendPayloadData(tabId, cmd) {
   let sendMsg = new Promise((resolve, reject) => {
     chrome.tabs.sendMessage(
       tabId,
       {
         cmd: cmd,
+        isRadio: isRadio,
       },
       (res) => {
         if (chrome.runtime.lastError) return resolve({ message: "fail" });
@@ -76,5 +99,3 @@ async function sendForegroundMsg(tabId, cmd) {
   });
   return await sendMsg;
 }
-
-async function checkInjectedScript() {}
