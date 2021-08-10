@@ -48,7 +48,7 @@ function getPlaylistData(xPath, isRadio) {
     if (isRadio) {
       let link = "https://youtube.com" + conts.childNodes[i].childNodes[2].childNodes[1].childNodes[3].childNodes[1].childNodes[1].getAttribute("href").split("&")[0];
       let title = conts.childNodes[i].childNodes[2].childNodes[1].childNodes[5].childNodes[3].childNodes[3].innerText;
-      let data = `${i}\t${title}\t${link}`;
+      let data = `${i}\t${title}\t${link}\n`;
       tsvDataArray.push(data);
     }
     //generic playlist
@@ -56,7 +56,7 @@ function getPlaylistData(xPath, isRadio) {
       let cont = conts.childNodes[i].childNodes[3].childNodes[1].childNodes[3].childNodes[1].childNodes[3];
       let link = "https://youtube.com" + cont.getAttribute("href").split("&")[0];
       let title = cont.getAttribute("title");
-      let data = `${i}\t${title}\t${link}`;
+      let data = `${i}\t${title}\t${link}\n`;
       tsvDataArray.push(data);
     }
   }
