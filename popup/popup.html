@@ -1,88 +1,123 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        width: 300px;
+        height: 200px;
+        background-color: #ffffff;
+        font-family: sans-serif;
+        margin: 0px !important;
+      }
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
-  <style>
-    body {
-      width: 300px;
-      height: 200px;
-      background-color: #49154a;
-      font-family: sans-serif;
-    }
+      .parent-element {
+        width: 100%;
+        text-align: center;
+        position: relative;
+        top: 80px;
+      }
 
-    .parent-element {
-      width: 100%;
-      text-align: center;
-      position: relative;
-      top: 80px;
-    }
+      .btn {
+        display: inline-block;
+        background-color: #fb8a08;
+        padding: 10px 20px;
+        border-radius: 5px;
+        border-color: #fb8a08;
+        color: whitesmoke;
+        font-size: 18px;
+      }
 
-    .btn {
-      display: inline-block;
-      background-color: #fb8a08 !important;
-      padding: 10px 20px;
-      border-radius: 10px;
-      border-color: #fb8a08;
-      color: whitesmoke;
-      font-size: 20px;
-    }
+      .footer-parent {
+        display: flex;
+      }
 
-    .footer-parent {
-      display: flex;
-    }
+      .footer-grand-parent {
+        position: relative;
+        top: 100%;
+      }
 
-    .footer-grand-parent {
-      position: relative;
-      top: 100%;
-    }
+      .settings-alignment {
+        position: relative;
+        width: 300px;
+        height: 50px;
+        text-align: right;
+      }
 
-    .settings-alignment {
-      position: relative;
-      left: 160px;
-    }
+      .settings-img {
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+        padding-right: 5px;
+      }
 
-  </style>
-</head>
+      h1,
+      h2,
+      h4,
+      p {
+        color: #1b1b1b;
+      }
 
-<body>
-  <!-- Header -->
-  <section>
-    <h1 style="text-align: center;color: whitesmoke; font-size: 30px;">YT Playlist to File</h1>
-  </section>
-  <!-- body -->
-  <section id="main-body">
-    <div class="parent-element">
-      <p id="log-txt" style="text-align: center; color: whitesmoke; font-size: 30px"></p>
-      <button id="convert-btn" class="btn">Convert</button>
-      <h2 id="conditionalMessage"></h2>
-    </div>
-  </section>
+      p {
+        font-size: 16px;
+      }
 
+      footer {
+        background-color: #fb8a08;
+        height: 50px;
+      }
 
-  <!-- Result -->
-  <section id="result-parent" style="display: none">
-    <p id="result-txt" style="text-align: center">36 Playlist Converted.</p>
-    <button id="preview-btn" class="btn">Open Preview</button>
-    <button id="save-btn" class="btn">Save as .tsv</button>
-  </section>
+      .logo-img {
+        padding: 7px 10px 0px 10px;
+      }
 
+      a {
+        /* font-weight: 600; */
+        font-size: 14px;
+        line-height: 50px;
+        color: #ffffff;
+        margin-right: 7px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
 
-  <!-- footer area -->
-  <footer class="footer-grand-parent">
-    <div class="footer-parent">
-      <img src="../images/icon-32x32.png" alt="" />
-      <h4 style="color: whitesmoke">text example</h4>
-      <div class="settings-alignment">
-        <img src="../images/8f759ef4acbd5ca6f9d2ae5eb50bce5b.jpg" style="height: 30px; width: 30px" alt="" />
+  <body>
+    <!-- Header -->
+    <section>
+      <h1 style="text-align: center; font-size: 30px">YT Playlist to File</h1>
+    </section>
+    <!-- body -->
+    <section id="main-body">
+      <div class="parent-element">
+        <p id="log-txt" style="text-align: center"></p>
+        <button id="convert-btn" class="btn">Convert</button>
+        <h2 id="conditionalMessage"></h2>
       </div>
-    </div>
-  </footer>
+    </section>
 
-  <script src="./popup.js"></script>
-</body>
+    <!-- Result -->
+    <section id="result-parent" style="display: none">
+      <p id="result-txt" style="text-align: center">36 Playlist Converted.</p>
+      <button id="preview-btn" class="btn">Open Preview</button>
+      <button id="save-btn" class="btn">Save as .tsv</button>
+    </section>
 
+    <!-- footer area -->
+    <footer class="footer-grand-parent">
+      <div class="footer-parent">
+        <img class="logo-img" src="../images/icon-256x256.png" alt="" width="35px" height="35px" />
+        <a href="http://github.com/SrejonKhan" target="_blank" rel="noopener noreferrer">Contributors</a>
+        <a href="http://github.com/SrejonKhan" target="_blank" rel="noopener noreferrer">Repository</a>
+        <div class="settings-alignment">
+          <img class="settings-img" src="../images/settings.png" style="height: 30px; width: 30px" alt="" />
+        </div>
+      </div>
+    </footer>
+
+    <script src="./popup.js"></script>
+  </body>
 </html>

@@ -24,7 +24,7 @@ convertBtn.addEventListener("click", () => {
     }
     // other site
     else {
-      logTxt.innerText = "You're not in any Youtube Playlist. Pleae open a playlist";
+      logTxt.innerText = "You're not in any Youtube Playlist. Please open a playlist";
     }
   });
 });
@@ -94,4 +94,3 @@ function download(data, filename, type) {
     }, 0);
   }
 }
-
