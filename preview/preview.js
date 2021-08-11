@@ -5,6 +5,7 @@ chrome.runtime.sendMessage(
   (response) => {
     if (response.message === "success") {
       document.getElementById("result").innerText = response.payload.previewData;
+      console.log(response.payload.previewData)
     } else {
       // handle error here
     }
